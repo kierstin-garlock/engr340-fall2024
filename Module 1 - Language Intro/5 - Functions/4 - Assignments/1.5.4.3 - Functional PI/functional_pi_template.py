@@ -10,9 +10,21 @@ def my_pi(target_error):
     """
 
     ### YOUR CODE HERE ###
+    # set variables from Gauss_Legendre algorithm
+    a = 1
+    b = 1 / math.sqrt(2)
+    t = 1 / 4
+    p = 1
 
+    for i in range(1, 10):
+
+        a_1 = (a + b) / 2
+        b_1 = math.sqrt(a * b)
+        t_1 = t - (p * ((a_1 - a) ** 2))
+        p_1 = 2 * p
+        a, b, t, p = a_1, b_1, t_1, p_1
     # change this so an actual value is returned
-    return 0
+    return ((a + b) ** 2) / (4 * t)
 
 
 
