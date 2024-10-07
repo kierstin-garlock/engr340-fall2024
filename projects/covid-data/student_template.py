@@ -1,5 +1,5 @@
 import sys
-
+import pandas as pd
 
 def parse_nyt_data(file_path=''):
     """
@@ -67,7 +67,14 @@ def first_question(data):
     """
 
     # your code here
-    return
+    df = pd.DataFrame(data)
+    rockingham_data = df[df['sate'] == 'Virginia' and df['county'] == 'Rockingham']
+    first_rockingham = df.min(rockingham_data[df['date']])
+    print(first_rockingham)
+    harrisonburg_data = df[df['state'] == 'Virginia' and df['county'] == 'Harrisonburg']
+    first_harrisonburg = df.min(harrisonburg_data[df['date']])
+    print(first_harrisonburg)
+    return first_rockingham, first_harrisonburg
 
 def second_question(data):
     """
@@ -78,14 +85,23 @@ def second_question(data):
     """
 
     # your code here
-    return
+    df = pd.DataFrame(data)
+    harrisonburg_data = df[df['sate'] == 'Virginia' and df['county'] == 'Harrisonburg']
+    most_new_harrisonburg = df.max(harrisonburg_data[df['cases']])
+    print(most_new_harrisonburg)
+    return most_new_harrisonburg
 
 def third_question(data):
     # Write code to address the following question:Use print() to display your responses.
     # What was the worst 7-day period in either the city and county for new COVID cases?
     # This is the 7-day period where the number of new cases was maximal.
 
-    return
+    df = pd.DataFrame(data)
+    harrisonburg_data = df[df['sate'] == 'Virginia' and df['county'] == 'Harrisonburg']
+    most_new_harrisonburg = df.max(harrisonburg_data[df['cases']])
+    print(most_new_harrisonburg)
+    return most_new_harrisonburg
+
 
 if __name__ == "__main__":
     data = parse_nyt_data('us-counties.csv')
