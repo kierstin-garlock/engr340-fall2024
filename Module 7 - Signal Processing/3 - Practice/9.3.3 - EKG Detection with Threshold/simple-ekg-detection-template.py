@@ -1,3 +1,5 @@
+from operator import index
+
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import find_peaks
@@ -22,8 +24,8 @@ signal = np.load(filepath)
 Step 2: Determine how much data to use...
 """
 # If you wish to only run on ~10s of data uncomment the line below
-# if you wish to run on all data, comment out this line
-signal = signal[0:3300]
+# if you wish to run on all data, comment out this line 10803 or 3300
+signal = signal[0:10803]
 
 
 """
@@ -32,10 +34,10 @@ Adjust the values for threshold and timeout to change the detection method/appro
 """
 
 # set a detection threshold (YOUR VALUE BELOW)
-detection_threshold = -1
+detection_threshold = 0.5
 
 # set a heart beat time out (YOUR VALUE BELOW)
-detection_time_out = -1
+detection_time_out = 150
 
 # track the last time we found a beat
 last_detected_index = -1
@@ -51,9 +53,13 @@ Step 4: Manually iterate through the signal and apply the threshold with timeout
 """
 
 # loop through signal finding beats
-for value in signal:
+for index, sig in enumerate(signal):
     ## Use a conditional statement to see if the signal is above a threshold...
-
+    if sig > detection_threshold:
+        # check for first beat or enough time passed for next beat
+        if last_detected_index == -1 or  index - last_detected_index > detection_time_out:
+            beats_detected.append(index)
+            last_detected_index = index
     ## Once an index is found, place the index in the beats_detected list
     current_index += 1
 
